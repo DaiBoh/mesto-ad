@@ -4,23 +4,23 @@ class Api {
     this._headers = config.headers;
   }
 
-  _checkResponse(res) {
-    if (res.ok) {
-      return res.json();
+  _handleResponse(response) {
+    if (response.ok) {
+      return response.json();
     }
-    return Promise.reject(`Ошибка: ${res.status}`);
+    return Promise.reject(`Ошибка: ${response.status}`);
   }
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
-    }).then(this._checkResponse);
+    }).then(this._handleResponse);
   }
 
   getCardList() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
-    }).then(this._checkResponse);
+    }).then(this._handleResponse);
   }
 
   setUserInfo(name, about) {
@@ -28,7 +28,7 @@ class Api {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({ name, about })
-    }).then(this._checkResponse);
+    }).then(this._handleResponse);
   }
 
   updateUserAvatar(avatar) {
@@ -36,7 +36,7 @@ class Api {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({ avatar })
-    }).then(this._checkResponse);
+    }).then(this._handleResponse);
   }
 
   addCard(name, link) {
@@ -44,21 +44,21 @@ class Api {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({ name, link })
-    }).then(this._checkResponse);
+    }).then(this._handleResponse);
   }
 
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
-    }).then(this._checkResponse);
+    }).then(this._handleResponse);
   }
 
   changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: isLiked ? 'DELETE' : 'PUT',
       headers: this._headers
-    }).then(this._checkResponse);
+    }).then(this._handleResponse);
   }
 }
 
