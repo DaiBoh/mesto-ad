@@ -1,4 +1,4 @@
-const markInputError = (form, input, msg, config) => {
+const showInputError = (form, input, msg, config) => {
   const errorEl = form.querySelector(`#${input.id}-error`);
 
   input.classList.add(config.inputErrorClass);
@@ -8,7 +8,7 @@ const markInputError = (form, input, msg, config) => {
   }
 };
 
-const clearInputError = (form, input, config) => {
+const hideInputError = (form, input, config) => {
   const errorEl = form.querySelector(`#${input.id}-error`);
 
   input.classList.remove(config.inputErrorClass);
@@ -18,7 +18,7 @@ const clearInputError = (form, input, config) => {
   }
 };
 
-const validateInput = (form, input, config) => {
+const checkInputValidity = (form, input, config) => {
   let msg = '';
 
   if (input.validity.patternMismatch) {
@@ -34,46 +34,46 @@ const validateInput = (form, input, config) => {
   }
 
   if (!input.validity.valid) {
-    markInputError(form, input, msg, config);
+    showInputError(form, input, msg, config);
     return false;
   } else {
-    clearInputError(form, input, config);
+    hideInputError(form, input, config);
     return true;
   }
 };
 
-const hasErrors = (inputs) => {
+const hasInvalidInput = (inputs) => {
   return inputs.some(input => !input.validity.valid);
 };
 
-const lockButton = (btn, config) => {
+const disableSubmitButton = (btn, config) => {
   btn.classList.add(config.inactiveButtonClass);
   btn.disabled = true;
 };
 
-const unlockButton = (btn, config) => {
+const enableSubmitButton = (btn, config) => {
   btn.classList.remove(config.inactiveButtonClass);
   btn.disabled = false;
 };
 
-const updateButtonState = (inputs, btn, config) => {
-  if (hasErrors(inputs)) {
-    lockButton(btn, config);
+const toggleButtonState = (inputs, btn, config) => {
+  if (hasInvalidInput(inputs)) {
+    disableSubmitButton(btn, config);
   } else {
-    unlockButton(btn, config);
+    enableSubmitButton(btn, config);
   }
 };
 
-const attachFormListeners = (form, config) => {
+const setEventListeners = (form, config) => {
   const inputs = Array.from(form.querySelectorAll(config.inputSelector));
   const btn = form.querySelector(config.submitButtonSelector);
 
-  updateButtonState(inputs, btn, config);
+  toggleButtonState(inputs, btn, config);
 
   inputs.forEach(input => {
     input.addEventListener('input', () => {
-      validateInput(form, input, config);
-      updateButtonState(inputs, btn, config);
+      checkInputValidity(form, input, config);
+      toggleButtonState(inputs, btn, config);
     });
   });
 };
@@ -83,11 +83,11 @@ const clearValidation = (form, config) => {
   const btn = form.querySelector(config.submitButtonSelector);
 
   inputs.forEach(input => {
-    clearInputError(form, input, config);
+    hideInputError(form, input, config);
   });
 
   if (btn) {
-    lockButton(btn, config);
+    disableSubmitButton(btn, config);
   }
 };
 
@@ -96,7 +96,7 @@ const enableValidation = (config) => {
 
   forms.forEach(form => {
     form.setAttribute('novalidate', '');
-    attachFormListeners(form, config);
+    setEventListeners(form, config);
   });
 };
 

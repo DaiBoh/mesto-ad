@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "npm run build"
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/DaiBoh/mesto-ad#readme",
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "vite": "^8.0.16"
   }
 }
