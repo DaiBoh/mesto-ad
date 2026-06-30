@@ -11,16 +11,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Dmitrii-byte/mesto-ad.git"
+    "url": "git+https://github.com/DaiBoh/mesto-ad.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ilya Chubarev",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/Dmitrii-byte/mesto-ad/issues"
+    "url": "https://github.com/DaiBoh/mesto-ad/issues"
   },
-  "homepage": "https://github.com/Dmitrii-byte/mesto-ad#readme",
+  "homepage": "https://github.com/DaiBoh/mesto-ad#readme",
   "devDependencies": {
     "vite": "^8.0.16"
   }
